@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { collection, getDocs } from "firebase/firestore";  //read data https://firebase.google.com/docs/firestore/quickstart#web-version-9_1
+import { getFirestore, addDoc,  collection, getDocs } from "firebase/firestore";
+ //read data https://firebase.google.com/docs/firestore/quickstart#web-version-9_1
 
 const firebaseConfig = {
   apiKey: "AIzaSyBVTX_rUL3NYAujxFdJTWgdOJSRbPgLTBU",
@@ -24,3 +24,14 @@ export const getPeople = async() => {
     });
     return people
 };
+
+export const addPerson = async(name, height, mass) => { //https://firebase.google.com/docs/firestore/quickstart#add_data
+    try {
+        const docRef = await addDoc(collection(db, "people"), {
+         name, height, mass //ha a változó/paramtéter neve megegyezik a kulcs nevével, kakor nem kell kiírni a kulcsérték párokat
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+}
